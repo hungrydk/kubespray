@@ -84,6 +84,7 @@
 
 - name: Check if vsphere-cloud-provider ClusterRole exists
   command: "{{ bin_dir }}/kubectl get clusterroles system:vsphere-cloud-provider"
+  failed_when: result.failed
   register: vsphere_cloud_provider
   ignore_errors: true
   when:
@@ -91,7 +92,7 @@
     - cloud_provider is defined
     - cloud_provider == 'vsphere'
     - kube_version | version_compare('v1.9.0', '>=')
-    - kube_version | version_compare('v1.9.3', '<=')
+    - kube_version | version_compare('v1.9.5', '<=')
     - inventory_hostname == groups['kube-master'][0]
   tags: vsphere
 
@@ -104,9 +105,9 @@
     - rbac_enabled
     - cloud_provider is defined
     - cloud_provider == 'vsphere'
-    - vsphere_cloud_provider.rc != 0
+    - not(vsphere_cloud_provider)
     - kube_version | version_compare('v1.9.0', '>=')
-    - kube_version | version_compare('v1.9.3', '<=')
+    - kube_version | version_compare('v1.9.5', '<=')
     - inventory_hostname == groups['kube-master'][0]
   tags: vsphere
 
@@ -121,9 +122,9 @@
     - rbac_enabled
     - cloud_provider is defined
     - cloud_provider == 'vsphere'
-    - vsphere_cloud_provider.rc != 0
+    - not(vsphere_cloud_provider)
     - kube_version | version_compare('v1.9.0', '>=')
-    - kube_version | version_compare('v1.9.3', '<=')
+    - kube_version | version_compare('v1.9.5', '<=')
     - inventory_hostname == groups['kube-master'][0]
   tags: vsphere
 
