@@ -24,7 +24,7 @@
 
 - name: Write kubelet config file (non-kubeadm)
   template:
-    src: kubelet.standard.env.j2
+    src: KUBELET.standard.env.j2
     dest: "{{ kube_config_dir }}/kubelet.env"
     backup: yes
   when: not kubeadm_enabled
